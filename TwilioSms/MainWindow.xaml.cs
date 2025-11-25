@@ -34,7 +34,11 @@ namespace Template
         [JsonProperty("Auth_Token_val")]
         public string Auth_Token_val { get; set; }
         [JsonProperty("Twilio_Number_val")]
-        public string Twilio_Number_val { get; set; } 
+        public string Twilio_Number_val { get; set; }
+        [JsonProperty("Recipient_Number_val")]
+        public string Recipient_Number_val { get; set; }
+        [JsonProperty("Dialogue_val")]
+        public string Dialogue_val { get; set; }
     }
 
     public class Model
@@ -78,6 +82,8 @@ namespace Template
                 Account_SID_val = Account_SID.Text,
                 Auth_Token_val = Auth_Token.Text,
                 Twilio_Number_val = Twilio_Number.Text,
+                Recipient_Number_val = Recipient_Number.Text,
+                Dialogue_val = new TextRange(Dialogue.Document.ContentStart, Dialogue.Document.ContentEnd).Text.TrimEnd('\r', '\n'),
             };
             return serialnumber_;
         }
@@ -90,6 +96,9 @@ namespace Template
                 Account_SID.Text = Parameter_info[model].Models[serialnumber].SerialNumbers.Account_SID_val;
                 Auth_Token.Text = Parameter_info[model].Models[serialnumber].SerialNumbers.Auth_Token_val;
                 Twilio_Number.Text = Parameter_info[model].Models[serialnumber].SerialNumbers.Twilio_Number_val;
+                Recipient_Number.Text = Parameter_info[model].Models[serialnumber].SerialNumbers.Recipient_Number_val;
+                Dialogue.Document.Blocks.Clear();
+                Dialogue.Document.Blocks.Add(new Paragraph(new Run(Parameter_info[model].Models[serialnumber].SerialNumbers.Dialogue_val)));
                 Log.Information("導入參數。");
             }
             else
@@ -257,11 +266,16 @@ namespace Template
                         string accountSID = Account_SID.Text;
                         string authToken = Auth_Token.Text;
                         string twilioNumber = Twilio_Number.Text;
+                        string recipientNumber = Recipient_Number.Text;
                         if (WarnAndLog(accountSID, "Account SID")) return;
                         if (WarnAndLog(authToken, "Auth Token")) return;
                         if (WarnAndLog(twilioNumber, "Twilio Number")) return;
+                        if (WarnAndLog(recipientNumber, "Recipient Number")) return;
                         tsh = new TwilioSmsHandler(accountSID, authToken, twilioNumber);
-                        //tsh.SendSms("+886938607861", "Hello! 這是 Twilio 測試簡訊");
+                        Console.OutputEncoding = System.Text.Encoding.UTF8;
+                        string message = new TextRange(Dialogue.Document.ContentStart, Dialogue.Document.ContentEnd).Text.TrimEnd('\r', '\n');
+                        //Console.WriteLine(message);
+                        //tsh.SendSms(recipientNumber, message);
                         break;
                     }
                 case nameof(Save_Config):

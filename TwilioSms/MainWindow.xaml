@@ -49,16 +49,24 @@
         <TabControl Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="491" Width="992" Background="#FFE6F0FF">
             <TabItem Header="主畫面" Style="{StaticResource BaseTabcontrol}">
                 <Grid>
-                    <TextBox x:Name="Account_SID" Style="{StaticResource BaseTextBox}" Tag="Account SID" Margin="60,99,645,319"/>
-                    <TextBox x:Name="Auth_Token" Style="{StaticResource BaseTextBox}" Tag="Auth Token" Margin="55,177,650,243"/>
-                    <TextBox x:Name="Twilio_Number" Style="{StaticResource BaseTextBox}" Tag="Twilio Number" Margin="52,260,653,159"/>
-                    <Button x:Name="Send_SMS" Style="{StaticResource CircleButton}" Margin="712,93,174,266" Content="Send SMS" FontSize="18" Height="100" Width="100" Click="Main_Btn_Click"/>
-                    <Button x:Name="Save_Config" Style="{StaticResource CircleButton}" Margin="707,230,179,129" Content="Save Config" FontSize="18" Height="100" Width="100" Click="Main_Btn_Click"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="參數畫面" Style="{StaticResource BaseTabcontrol}">
-                <Grid>
-
+                    <WrapPanel Orientation="Vertical" Margin="19,86,659,86">
+                        <TextBox x:Name="Account_SID" Style="{StaticResource BaseTextBox}" Tag="Account SID" Height="40" Width="250" Margin="29,25,0,0"/>
+                        <TextBox x:Name="Auth_Token" Style="{StaticResource BaseTextBox}" Tag="Auth Token" Height="40" Width="250" Margin="29,25,0,0"/>
+                        <TextBox x:Name="Twilio_Number" Style="{StaticResource BaseTextBox}" Tag="Twilio Number" Height="40" Width="250" Margin="29,25,0,0"/>
+                        <TextBox x:Name="Recipient_Number" Style="{StaticResource BaseTextBox}" Tag="Recipient Number" Height="40" Width="250" Margin="29,25,0,0"/>
+                    </WrapPanel>
+                    <Button x:Name="Send_SMS" Style="{StaticResource CircleButton}" Margin="840,88,46,271" Content="Send SMS" FontSize="18" Height="100" Width="100" Click="Main_Btn_Click"/>
+                    <Button x:Name="Save_Config" Style="{StaticResource CircleButton}" Margin="840,254,46,105" Content="Save Config" FontSize="18" Height="100" Width="100" Click="Main_Btn_Click"/>
+                    <RichTextBox x:Name="Dialogue" Margin="343,34,180,31" Background="Beige" VerticalScrollBarVisibility="Auto">
+                        <RichTextBox.Resources>
+                            <Style TargetType="Paragraph">
+                                <Setter Property="Margin" Value="0"/>
+                                <!-- 段落外距 0 -->
+                                <Setter Property="LineHeight" Value="12"/>
+                                <!-- 行高可依需求調整 -->
+                            </Style>
+                        </RichTextBox.Resources>
+                    </RichTextBox>
                 </Grid>
             </TabItem>
             <TabItem Header="關於" Style="{StaticResource BaseTabcontrol}" PreviewMouseLeftButtonDown="About_Click"/>
